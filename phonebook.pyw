@@ -1,6 +1,9 @@
 from Tkinter import *
+#import splash
 import sqlite3
 import tkMessageBox
+##import re
+##regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
 
 con=sqlite3.Connection('persondetails')
 cur=con.cursor()
@@ -68,26 +71,41 @@ Label(root,text='E-mail', font='times 16').grid(row=17,column=4)
 e11=Entry(root)
 e11.grid(row=17,column=6)
 Button(root,text='+').grid(row=17,column=7)
-
+##def checkm():
+##            if not(re.search(regex,e11.get())):
+##                tkMessageBox.showerror('Error','You have entered wrong Email')
 
 
 def save():
-    cur.execute("insert into details(fname,mname,lname,company,address,city,pin,website,dob,mob,email) values(?,?,?,?,?,?,?,?,?,?,?)",(e1.get(),e2.get(),e3.get(),e4.get(),e5.get(),e6.get(),e7.get(),e8.get(),e9.get(),e10.get(),e11.get()))
-    con.commit()
-    cur.execute('select * from details')
-    tkMessageBox.showinfo('Success','Your contact is successfully saved!!')
-    print cur.fetchall()
-    e1.delete(0,END)
-    e2.delete(0,END)
-    e3.delete(0,END)
-    e4.delete(0,END)
-    e5.delete(0,END)
-    e6.delete(0,END)
-    e7.delete(0,END)
-    e8.delete(0,END)
-    e9.delete(0,END)
-    e10.delete(0,END)
-    e11.delete(0,END)
+    
+    
+    if e1.get()==e2.get()==e3.get():
+        tkMessageBox.showerror('Error','You have entered wrong name')
+    elif len(e7.get())>6:
+        tkMessageBox.showerror('Error','You have entered wrong pincode')
+    elif len(e10.get())>10:
+        tkMessageBox.showerror('Error','You have entered wrong Phone')
+    
+##    elif len(e11.get())>0:
+##        checkm()
+        
+    else:
+        cur.execute("insert into details(fname,mname,lname,company,address,city,pin,website,dob,mob,email) values(?,?,?,?,?,?,?,?,?,?,?)",(e1.get(),e2.get(),e3.get(),e4.get(),e5.get(),e6.get(),e7.get(),e8.get(),e9.get(),e10.get(),e11.get()))
+        con.commit()
+        cur.execute('select * from details')
+        tkMessageBox.showinfo('Success','Your contact is successfully saved!!')
+        print cur.fetchall()
+        e1.delete(0,END)
+        e2.delete(0,END)
+        e3.delete(0,END)
+        e4.delete(0,END)
+        e5.delete(0,END)
+        e6.delete(0,END)
+        e7.delete(0,END)
+        e8.delete(0,END)
+        e9.delete(0,END)
+        e10.delete(0,END)
+        e11.delete(0,END)
 
 
 def search():
